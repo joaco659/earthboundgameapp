@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="stylesheet" href="./style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Earthbound Fangame</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="action-menu">
+        <fieldset class="actions">
+          <legend class="player-character-name">Jugador</legend>
+          <ul class="actions__inner">
+            <li id="action_bash"><p>Bash</p></li>
+            <li id="action_goods"><p>Goods</p></li>
+            <li id="action_autofight"><p>Auto Fight</p></li>
+            <li id="action_psi"><p>PSI</p></li>
+            <li id="action_defend"><p>Defend</p></li>
+            <li id="action_runaway"><p>Run Away</p></li>
+          </ul>
+        </fieldset>
+      </div>
+
+      <div class="enemy-container">
+        <img id="enemy" src="./joaco-sprite.png" alt="Joaco" />
+      </div>
+
+      <div class="player-container">
+        <div id="player-status">
+          <h2>Jugador</h2>
+          <div class="player-hp">
+            <b>HP</b>
+            <ul id="hp-counter" class="rolling-counter"></ul>
+          </div>
+          <div class="player-pp">
+            <b>PP</b>
+            <ul id="pp-counter" class="rolling-counter"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

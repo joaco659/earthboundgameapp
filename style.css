@@ -1,0 +1,174 @@
+@font-face {
+  font-family: "earthbound-menu";
+  src: url("./public/earthbound-menu-extended.ttf");
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #1b1b1b;
+  font-family: "earthbound-menu";
+  /* overflow-x: hidden; */
+}
+
+/* Menu de acciones */
+.action-menu {
+  display: flex;
+  flex-flow: row nowrap;
+  margin-left: 3em;
+  margin-top: 2em;
+  padding-bottom: 3em;
+}
+.actions {
+  /* max-width: 40em; */
+  width: 45em;
+  margin-right: 40vw;
+  background-color: #1b1b1b;
+  color: #efefef;
+  border: solid 5px #efefef;
+  border-style: groove;
+  border-radius: 8px;
+}
+.actions > legend {
+  font-size: clamp(19px, 1.5vw, 24px);
+}
+.actions__inner {
+  list-style-type: none;
+  margin: 0em;
+  font-size: clamp(20px, 1.6vw, 25px);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+.actions__inner > li {
+  margin: 0.2em 0;
+  cursor: pointer;
+}
+.actions__inner > li > p {
+  margin: 0;
+}
+.actions__inner > li:hover {
+  list-style-type: symbols(cyclic "▶");
+}
+
+/* Enemigo */
+.enemy-container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: end;
+  background: rgb(0, 0, 0);
+  background: radial-gradient(
+    circle,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(24, 154, 191, 1) 0%,
+    rgba(33, 232, 170, 1) 100%
+  );
+  padding: 2em 0;
+}
+#enemy {
+  margin-top: 5em;
+  width: clamp(130px, 11vw, 160px);
+}
+
+/* Jugador */
+.player-container {
+  color: #efefef;
+  display: flex;
+  justify-content: center;
+}
+#player-status {
+  position: relative;
+  top: -2em;
+  background: #4e4cd4;
+  border: 10px groove #efefef;
+  border-radius: 8px;
+  display: flex;
+  flex-flow: column nowrap;
+  padding: 1em;
+}
+#player-status > h2 {
+  margin: 0;
+  margin-bottom: 1em;
+}
+#player-status > .player-hp,
+#player-status > .player-pp {
+  width: 8em;
+  display: flex;
+}
+#player-status > .player-hp > b,
+#player-status > .player-pp > b {
+  width: 35%;
+  text-align: center;
+  font-size: clamp(21px, 1.7vw, 26px);
+  display: block;
+}
+#player-status > .player-hp > p,
+#player-status > .player-pp > p {
+  width: 65%;
+  margin: 0;
+  text-align: center;
+  border: 3px solid #1b1b1b;
+  font-size: clamp(21px, 1.7vw, 26px);
+  background-color: #efefef;
+  color: #1b1b1b;
+}
+#player-status > .player-hp > p {
+  text-align: center;
+  background-color: #efefef;
+  color: #1b1b1b;
+  grid-column: 2 / span 2;
+}
+
+.rolling-counter {
+  margin: 0;
+  border: 3px solid #1b1b1b;
+  width: 65%;
+  height: 3em;
+  list-style-type: none;
+  padding-left: 0;
+  overflow: hidden;
+  display: inline-block;
+  background-color: #efefef;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.rolling-counter > li {
+  text-align: center;
+  display: inline-block;
+  color: #1b1b1b;
+  border-left: 3px solid black;
+  font-size: 30px;
+  position: relative;
+  top: 0;
+}
+.rolling-counter > li:first-child {
+  border-left: 0;
+}
+
+/* .order-list {
+  border: 5px solid #999;
+  list-style-type: none;
+  padding-left: 0;
+  overflow: hidden;
+  height: 50px;
+  line-height: 1;
+  display: inline-block;
+}
+
+.order-list > li {
+  display: inline-block;
+  font-size: 50px;
+  font-weight: bold;
+  padding: 0 15px;
+  border-left: 1px solid black;
+  position: relative;
+  top: 0;
+}
+.order-list > li:first-child {
+  border-left: 0;
+} */
