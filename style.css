@@ -1,6 +1,6 @@
 @font-face {
   font-family: "earthbound-menu";
-  src: url("./public/earthbound-menu-extended.ttf");
+  src: url("./earthbound-menu-extended.ttf");
 }
 
 * {
@@ -12,6 +12,10 @@ body {
   background-color: #1b1b1b;
   font-family: "earthbound-menu";
   /* overflow-x: hidden; */
+}
+/* Clases utilitarias */
+.hidden {
+  display: none !important;
 }
 
 /* Menu de acciones */
@@ -25,6 +29,7 @@ body {
 .actions {
   /* max-width: 40em; */
   width: 45em;
+  min-height: 135px;
   margin-right: 40vw;
   background-color: #1b1b1b;
   color: #efefef;
@@ -55,23 +60,63 @@ body {
 }
 
 /* Enemigo */
+@-webkit-keyframes battlebg-joaco {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@-moz-keyframes battlebg-joaco {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes battlebg-joaco {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .enemy-container {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
   align-items: end;
-  background: rgb(0, 0, 0);
-  background: radial-gradient(
-    circle,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(24, 154, 191, 1) 0%,
-    rgba(33, 232, 170, 1) 100%
-  );
+  /* fondo de mi batalla por default */
+  background: linear-gradient(270deg, #21e8aa, #189abf);
+  background-size: 400% 400%;
+  -webkit-animation: battlebg-joaco 30s ease infinite;
+  -moz-animation: battlebg-joaco 30s ease infinite;
+  animation: battlebg-joaco 30s ease infinite;
+  
   padding: 2em 0;
 }
 #enemy {
   margin-top: 5em;
   width: clamp(130px, 11vw, 160px);
+}
+
+/* Caja de dialogo */
+.dialogue-box {
+  font-size: clamp(20px, 1.6vw, 25px);
+  margin: 0 40px;
 }
 
 /* Jugador */
@@ -150,25 +195,23 @@ body {
   border-left: 0;
 }
 
-/* .order-list {
-  border: 5px solid #999;
+/* Menus */
+.charselect-menu {
+  position: absolute;
+  min-height: 2.5em;
+  display: flex;
+  flex-flow: row wrap;
+  background-color: #1b1b1b;
+  color: #efefef;
+  padding: 0;
+  border: groove 5px #efefef;
+  border-radius: 8px;
+}
+.charselect-menu > li {
   list-style-type: none;
-  padding-left: 0;
-  overflow: hidden;
-  height: 50px;
-  line-height: 1;
-  display: inline-block;
+  margin: 0.5em;
+  margin-left: 2rem;
 }
-
-.order-list > li {
-  display: inline-block;
-  font-size: 50px;
-  font-weight: bold;
-  padding: 0 15px;
-  border-left: 1px solid black;
-  position: relative;
-  top: 0;
+.charselect-menu > li:hover {
+  list-style-type: symbols(cyclic "▶");
 }
-.order-list > li:first-child {
-  border-left: 0;
-} */
