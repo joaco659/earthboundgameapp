@@ -1,5 +1,9 @@
+import { Howl, Howler } from "howler";
 import { RollingCounter } from "./rollingCounter";
 import { actions } from "./actions.js";
+
+// Funcion utilitaria
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const hpCounter = new RollingCounter(
   document.getElementById("hp-counter"),
@@ -31,10 +35,23 @@ const ppCounter = new RollingCounter(
 //   }
 // };
 
+const SFX = {
+  text: new Howl({
+    src: ["./sounds/text.wav"],
+  }),
+  attack1: new Howl({
+    src: ["./sounds/attack1.wav"],
+  }),
+  attack2: new Howl({
+    src: ["./sounds/attack2.wav"],
+  }),
+  smash: new Howl({
+    src: ["./sounds/smash.wav"],
+  }),
+};
+
 // Efecto de maquina de escribir como en el juego original
-const typewrite = async (message, speed) => {
-  // Funcion utilitaria
-  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const typewrite = async (message, speed = 30) => {
   const dialogueBox = document.querySelector(".dialogue-box");
 
   // Si la caja de dialogo no se muestra, no escribe nada
@@ -43,13 +60,30 @@ const typewrite = async (message, speed) => {
     console.log("escribiendo");
     for (let i = 0; i < message.length; i++) {
       dialogueBox.textContent += message.charAt(i);
+      SFX.text.play();
+      // Respeta comas y puntos
       const WAIT_TIMES = {
         ".": 1000,
-        ",": 200,
+        ",": 400,
       };
       await wait(WAIT_TIMES[message.charAt(i)] || speed);
     }
+  } else {
+    console.log("NO MOSTRAR CAJA DE DIALOGO");
   }
+};
+
+// Fondo de colores que parpadea para ataques criticos como en el juego original
+const bgScreenColor = document.querySelector(".bg-screen-color");
+const blinkBgColor = async (color) => {
+  bgScreenColor.setAttribute("style", `background-color: ${color}`);
+  bgScreenColor.classList.remove("hidden");
+  await wait(300);
+  bgScreenColor.classList.add("hidden");
+  await wait(300);
+  bgScreenColor.classList.remove("hidden");
+  await wait(300);
+  bgScreenColor.classList.add("hidden");
 };
 
 const charSelectMenu = document.createElement("div");
@@ -79,11 +113,36 @@ const displayCharacterSelector = (context, contextElement, characters) => {
       console.log("Enemigo ", character.name, "seleccionado.");
       if (context.toLowerCase() == "enemies") {
         console.log("vida de antes del enemigo: ", character.stats.hp);
-        const attackDamage = actions.bashEnemy(
+        const [attackDamage, playerSmashed] = actions.getBashEnemyDamage(
           character,
           PLAYER_BASH_ATTACK,
           PLAYER_STATS
         );
+        toggleDialogueBox();
+        SFX.attack1.play();
+        SFX.attack1.once("end", async () => {
+          await wait(200);
+
+          if (playerSmashed) {
+            const smashImage = document.getElementById("smash-attack");
+            smashImage.classList.toggle("hidden");
+            SFX.smash.play();
+            blinkBgColor("#00ff6a99");
+
+            SFX.smash.once("end", async () => {
+              await typewrite(
+                `${PLAYER_BASH_ATTACK.attackMessage} ${character.name},\r\n infligiendo ${attackDamage} de daño.`
+              );
+            });
+          } else {
+            SFX.attack2.play();
+            SFX.attack2.once("end", async () => {
+              await typewrite(
+                `${PLAYER_BASH_ATTACK.attackMessage} ${character.name},\r\n infligiendo ${attackDamage} de daño.`
+              );
+            });
+          }
+        });
       }
       charSelectMenu.remove();
       actionSelected = null;
@@ -94,6 +153,10 @@ const displayCharacterSelector = (context, contextElement, characters) => {
   console.groupEnd();
 
   contextElement.appendChild(charSelectMenu);
+};
+const toggleDialogueBox = () => {
+  document.querySelector(".actions__inner").classList.toggle("hidden");
+  document.querySelector(".dialogue-box").classList.toggle("hidden");
 };
 
 const actionButtons = {
@@ -164,7 +227,13 @@ document.getElementById("action_psi").addEventListener("click", async () => {
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     30
   );
-  console.log("sos gei");
 });
 
-document.addEventListener("DOMContentLoaded", () => {});
+document.addEventListener("DOMContentLoaded", () => {
+  // Las acciones hacen ruido al hacer click en ellas
+  Object.entries(actionButtons).forEach((key) => {
+    key[1].addEventListener("click", () => {
+      SFX.text.play();
+    });
+  });
+});

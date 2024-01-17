@@ -18,6 +18,15 @@ body {
   display: none !important;
 }
 
+/* Fondo de color para simular ataques criticos */
+.bg-screen-color {
+  top: 0;
+  position: fixed;
+  z-index: 10;
+  width: 100%;
+  height: 200vh;
+}
+
 /* Menu de acciones */
 .action-menu {
   display: flex;
@@ -102,10 +111,10 @@ body {
   /* fondo de mi batalla por default */
   background: linear-gradient(270deg, #21e8aa, #189abf);
   background-size: 400% 400%;
-  -webkit-animation: battlebg-joaco 30s ease infinite;
-  -moz-animation: battlebg-joaco 30s ease infinite;
-  animation: battlebg-joaco 30s ease infinite;
-  
+  -webkit-animation: battlebg-joaco 10s ease infinite;
+  -moz-animation: battlebg-joaco 10s ease infinite;
+  animation: battlebg-joaco 10s ease infinite;
+
   padding: 2em 0;
 }
 #enemy {
@@ -117,6 +126,11 @@ body {
 .dialogue-box {
   font-size: clamp(20px, 1.6vw, 25px);
   margin: 0 40px;
+  display: flex;
+  white-space: pre-line;
+}
+#smash-attack {
+  height: clamp(40px, 4vw, 80px);
 }
 
 /* Jugador */

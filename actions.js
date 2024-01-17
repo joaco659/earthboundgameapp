@@ -1,5 +1,5 @@
 export const actions = {
-  bashEnemy: (enemy, attackUsed, playerStats) => {
+  getBashEnemyDamage: (enemy, attackUsed, playerStats) => {
     // Ataques criticos (los SMAAAASHes!)
     // Duplican el daño infligo al enemigo
     const smashed =
@@ -9,15 +9,15 @@ export const actions = {
       : attackUsed.attackLevel * playerStats.offense - enemy.stats.defense;
 
     // Factor benefactor para el jugador
-    // Cada ataque tiene chance de infligir 10% mas o menos de daño al enemigo.
+    // Cada ataque tiene chance de infligir 20% mas o menos de daño al enemigo.
     const rng = Math.round(Math.random() * 2);
     const extraDamage = [
       // Mas daño
-      -((attackDamage * 10) / 100),
+      -((attackDamage * 20) / 100),
       // Igual de daño
       0,
       // Menos daño
-      (attackDamage * 10) / 100,
+      (attackDamage * 20) / 100,
     ];
 
     console.log("Daño infligido al enemigo: ", attackDamage);
@@ -31,6 +31,6 @@ export const actions = {
       enemy.stats.hp - Math.abs(attackDamage + extraDamage[rng])
     );
 
-    return Math.abs(attackDamage + extraDamage[rng]);
+    return [Math.abs(attackDamage + extraDamage[rng]), smashed];
   },
 };
