@@ -14,21 +14,62 @@
         <fieldset class="actions">
           <legend class="player-character-name">Jugador</legend>
           <ul class="actions__inner">
-            <li id="action_bash">
+            <li id="action_bash" data-menu-ref="charselect-menu">
               <p>Bash</p>
               <!-- <ul class="charselect-menu">
-                <li>Enemigo</li>
-                <li>Enemigo</li>
+                <ul class="charselect-menu--selected-move">
+                  <li>
+                    PSI Thunder &alpha;
+                  </li>
+                </ul>
+                <li>To the Enemigo</li>
               </ul> -->
             </li>
-            <li id="action_goods"><p>Goods</p></li>
+            <li id="action_goods" data-menu-ref="goodselect-menu"><p>Goods</p></li>
             <li id="action_autofight"><p>Auto Fight</p></li>
-            <li id="action_psi"><p>PSI</p></li>
+            <li id="action_psi" data-menu-ref="psiselect-menu">
+              <p>PSI</p>
+              <!-- <div class="psiselect-menu">
+                <ul class="psiselect-menu__psi-info">
+                  <li>To all the enemies</li>
+                  <li>PP Cost: 10</li>
+                </ul>
+                <ul class="psiselect-menu__psi-types">
+                  <li data-psi-type="offense">Offense</li>
+                  <li data-psi-type="recover">Recover</li>
+                  <li data-psi-type="assist">Assist</li>
+                </ul>
+                <ul class="psiselect-menu__psi-moves">
+                  <ul class="psiselect-menu__psi-moves--psi-move" data-psi-move-name="psi_thunder">
+                    <p>PSI Thunder</p>
+                    <ul class="psi-move--levels">
+                      <li data-psi-level="alpha" data-psi-level-enabled="true">
+                        &alpha;
+                      </li>
+                      <li data-psi-level="beta" data-psi-level-enabled="true">
+                        &beta;
+                      </li>
+                      <li data-psi-level="gamma" data-psi-level-enabled="false">
+                        &gamma;
+                      </li>
+                      <li data-psi-level="omega" data-psi-level-enabled="false">
+                        &Omega;
+                      </li>
+                    </ul>
+                  </ul>
+                </ul>
+              </div> -->
+            </li>
             <li id="action_defend"><p>Defend</p></li>
             <li id="action_runaway"><p>Run Away</p></li>
           </ul>
           <p class="dialogue-box hidden">
-            <img id="smash-attack" class="hidden" src="./SMAAAASH.png" alt="SMAAAASH!!" />
+            <img
+              id="smash-attack"
+              class="hidden"
+              src="./SMAAAASH.png"
+              alt="SMAAAASH!!"
+            />
           </p>
         </fieldset>
       </div>

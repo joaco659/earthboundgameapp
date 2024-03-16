@@ -17,6 +17,12 @@ body {
 .hidden {
   display: none !important;
 }
+.invisible {
+  opacity: 0;
+}
+li.selected-opt {
+  list-style-type: symbols(cyclic "▶") !important;
+}
 
 /* Fondo de color para simular ataques criticos */
 .bg-screen-color {
@@ -220,6 +226,27 @@ body {
   padding: 0;
   border: groove 5px #efefef;
   border-radius: 8px;
+  z-index: 5;
+}
+.charselect-menu--selected-move {
+  cursor: default;
+  background-color: #1b1b1b;
+  justify-self: center !important;
+  color: #efefef;
+  padding: 0;
+  border: groove 5px #efefef;
+  border-radius: 8px;
+  min-height: 3em;
+  position: absolute;
+  top: -3em;
+  display: flex;
+  align-items: center;
+}
+.charselect-menu--selected-move > li {
+  list-style: none;
+  background-color: #6d50eb;
+  white-space: nowrap;
+  margin: 0 0.5em;
 }
 .charselect-menu > li {
   list-style-type: none;
@@ -228,4 +255,77 @@ body {
 }
 .charselect-menu > li:hover {
   list-style-type: symbols(cyclic "▶");
+}
+
+.psiselect-menu {
+  position: absolute;
+  min-height: 2.5em;
+  display: flex;
+  flex-flow: row wrap;
+  padding: 0;
+  cursor: default;
+}
+.psiselect-menu li {
+  list-style-type: none;
+  margin: 0.25em 0.5em;
+  margin-left: 2rem;
+}
+.psiselect-menu__psi-types > li {
+  cursor: pointer;
+}
+.psiselect-menu__psi-types > li:hover {
+  list-style-type: symbols(cyclic "▶");
+}
+.psiselect-menu__psi-types, .psiselect-menu__psi-info, .psiselect-menu__psi-moves {
+  padding: 0;
+  display: flex;
+  flex-flow: column wrap;
+  background-color: #1b1b1b;
+  color: #efefef;
+  border: groove 5px #efefef;
+  border-radius: 8px;
+}
+.psiselect-menu__psi-info {
+  position: absolute;
+  min-width: 186px;
+  left: -2.7em;
+  bottom: 0;
+}
+.psiselect-menu__psi-info > li {
+  margin: 0.25em 0.5em;
+}
+.psiselect-menu__psi-moves {
+  min-width: 15em;
+}
+.psiselect-menu__psi-moves > ul:nth-child(1) {
+  margin-top: 0.25em;
+}
+.psiselect-menu__psi-moves--psi-move {
+  padding: 0;
+  margin: 0;
+  margin-left: 0.5em;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+.psiselect-menu__psi-moves--psi-move > p {
+  margin: 0;
+  display: inline;
+}
+.psiselect-menu__psi-moves--psi-move > .psi-move--levels {
+  padding: 0;
+  margin-right: 0.5em;
+  display: flex;
+}
+.psiselect-menu__psi-moves--psi-move > .psi-move--levels > li {
+  margin: 0 0.35rem;
+  padding: 0 0.2em;
+  cursor: pointer;
+}
+.psiselect-menu__psi-moves--psi-move > .psi-move--levels > li:hover {
+  list-style-type: symbols(cyclic "▶");
+}
+.psiselect-menu__psi-moves--psi-move > .psi-move--levels > li[data-psi-level-enabled="false"] {
+  opacity: 0;
+  cursor: default;
 }
