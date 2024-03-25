@@ -81,11 +81,11 @@ export const actions = {
             enemyDodged
               ? psiResults.push({
                   to: enemy,
-                  results: [0, false, { enemyDodged: true }],
+                  results: [0, { smashed: false, enemyDodged: true }],
                 })
               : psiResults.push({
                   to: enemy,
-                  results: [attackDamage, false, {}],
+                  results: [attackDamage, { smashed: false }],
                 });
           });
           return psiResults;
@@ -113,20 +113,38 @@ export const actions = {
           // Si el enemigo tiene debilidad al hielo, le hara un 25% mas de daño
           enemy.stats.vulnerabilities.forEach((vulnerability) => {
             if (vulnerability == psiMove.psiName)
-              return Math.round(Math.abs(attackDamage + (attackDamage * 25) / 100));
+              return Math.round(
+                Math.abs(attackDamage + (attackDamage * 25) / 100)
+              );
           });
           // Si el enemigo tiene resistencia al hielo, le hara un 25% menos de daño
           enemy.stats.strengths.forEach((strength) => {
             if (strength == psiMove.psiName)
-              return Math.round(Math.abs(attackDamage - (attackDamage * 25) / 100));
+              return Math.round(
+                Math.abs(attackDamage - (attackDamage * 25) / 100)
+              );
           });
 
           // Daño mas random
           if (Math.random() < 0.5) {
-            return Math.round(Math.abs(attackDamage - (attackDamage * 10) / 100));
+            return Math.round(
+              Math.abs(attackDamage - (attackDamage * 10) / 100)
+            );
           } else {
-            return Math.round(Math.abs(attackDamage + (attackDamage * 10) / 100));
+            return Math.round(
+              Math.abs(attackDamage + (attackDamage * 10) / 100)
+            );
           }
+        },
+      },
+      psi_lifeup: {
+        alpha: () => {
+          /*
+              PARTE IMPORTANTE ----------------
+              hay que hacer algo para que cada accion psi tenga su propio accionar
+              y poder pasarle metodos como para que escriba cosas en pantalla y asi
+              podria hacer un modulo aparte como este y que maneje cada accion
+          */
         },
       },
     };

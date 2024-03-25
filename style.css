@@ -33,6 +33,21 @@ li.selected-opt {
   height: 200vh;
 }
 
+/* Esto es una prueba para probar las animaciones PSI */
+.bg-psi-animation {
+  top: 0;
+  position: absolute;
+  z-index: 15;
+  width: 100%;
+  height: 200vh;
+}
+
+/* Presets de clases para las animaciones PSI (lo encontre mas conveniente asi) */
+._PSI_ANIM-psi_freeze-alpha {
+  background-image: url("./psi_freeze-alpha.gif");
+  background-position: 12rem 5rem;
+}
+
 /* Menu de acciones */
 .action-menu {
   display: flex;

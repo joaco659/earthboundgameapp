@@ -1,6 +1,7 @@
-import { Howl, Howler } from "howler";
 import { RollingCounter } from "./rollingCounter";
 import { actions } from "./actions.js";
+import { getPsiHandler } from "./psiHandlers.js";
+import { SFX } from "./sfx.js";
 
 // Funcion utilitaria
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -43,24 +44,6 @@ const ppCounter = new RollingCounter(
 //     }, speed);
 //   }
 // };
-
-const SFX = {
-  text: new Howl({
-    src: ["./sounds/text.wav"],
-  }),
-  attack1: new Howl({
-    src: ["./sounds/attack1.wav"],
-  }),
-  attack2: new Howl({
-    src: ["./sounds/attack2.wav"],
-  }),
-  smash: new Howl({
-    src: ["./sounds/smash.wav"],
-  }),
-  enemyHit: new Howl({
-    src: ["./sounds/enemyhit.wav"],
-  }),
-};
 
 // Efecto de maquina de escribir como en el juego original
 const typewrite = async (message, speed = 30) => {
@@ -196,26 +179,17 @@ const displayCharacterSelector = (
 
       charSelectMenu.appendChild(psiMoveSelectedContainer);
 
-      characterLI.addEventListener("click", () => {
+      characterLI.addEventListener("click", async () => {
         console.log("Personaje", character.name, "seleccionado.");
         // Ataques que van dirigidos al enemigo
         // (Hay que calcular si hace daño o aplica un estado de efecto)
-        if (context.toLowerCase() == "enemies") {
-          // console.log("vida de antes del enemigo: ", character.stats.hp);
 
-          toggleDialogueBox();
-          SFX.attack1.play();
-          SFX.attack1.once("end", async () => {
-            await wait(200);
-            const psiResults = actions.getSinglePsiMoveAction(
-              character,
-              psiMove,
-              PLAYER_STATS
-            );
+        // console.log("vida de antes del enemigo: ", character.stats.hp);
+        const charactersCopy = GAME_CHARACTERS;
 
-            await typewrite("Ataque psi");
-          });
-        }
+        console.warn("EJECUTANDO PSI", psiMove);
+        getPsiHandler(psiMove, characters);
+
         charSelectMenu.remove();
         actionSelected = null;
       });
@@ -342,6 +316,7 @@ const psiSelectMenuBody = {
           psiMoveLevel.addEventListener("click", () => {
             let selectedPsiMove = psiMove;
             selectedPsiMove.psiSelectedLevel = level[0];
+            selectedPsiMove.psiUser = { name: "Jugador", stats: PLAYER_STATS };
             psiSelectMenu.remove();
 
             actionSelected = null;
@@ -367,15 +342,30 @@ const psiSelectMenuBody = {
                 );
               }
             } else {
-              displayCharacterSelector(
-                "allies",
-                actionButtons.psi,
-                // Refactorizar
-                // Hacer una variable donde se guarde el equipo, incluyendo al jugador
-                // (eso si en un futuro se pueden incluir aliados) :)
-                [{ name: "Jugador" }],
-                selectedPsiMove
-              );
+              // Esto mucho no se va a usar ya que por ahora solo va a haber un aliado
+              // (el cual es el jugador)
+              if (selectedPsiMove.psiScope == "all") {
+                (async function () {
+                  const psiResults = actions.getPluralPsiMoveAction(
+                    [{ name: "Jugador", stats: PLAYER_STATS }],
+                    selectedPsiMove,
+                    PLAYER_STATS
+                  );
+
+                  toggleDialogueBox();
+                  await typewrite("Ataque aliado psi en plural");
+                })();
+              } else {
+                displayCharacterSelector(
+                  "allies",
+                  actionButtons.psi,
+                  // Refactorizar
+                  // Hacer una variable donde se guarde el equipo, incluyendo al jugador
+                  // (eso si en un futuro se pueden incluir aliados) :)
+                  [{ name: "Jugador", stats: PLAYER_STATS }],
+                  selectedPsiMove
+                );
+              }
             }
           });
 
@@ -558,6 +548,16 @@ const PLAYER_PSI_MOVES = {
     },
   ],
   assist: [],
+};
+
+const GAME_CHARACTERS = {
+  allies: [
+    {
+      name: "Jugador",
+      stats: PLAYER_STATS,
+    },
+  ],
+  enemies: Enemies,
 };
 
 hpCounter.value = PLAYER_STATS.hp;
